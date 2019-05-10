@@ -21,11 +21,16 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { password, password2 } = this.state;
+    const { username, email, password, password2 } = this.state;
     if (password !== password2) {
       this.props.createMessage({ passwordDoesNotMatch: 'Passwords do not match' });
     } else {
-      console.log("submit");
+      const  newUser = {
+        username,
+        email,
+        password,
+      }
+      this.props.register(newUser);
     }
   };
 
