@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
-import { createMessage } from '../../actions/messages';
-
+import { createMessage } from "../../actions/messages";
 
 export class Register extends Component {
   state = {
-    username: '',
-    email: '',
-    password: '',
-    password2: ''
+    username: "",
+    email: "",
+    password: "",
+    password2: ""
   };
 
   static propTypes = {
@@ -23,22 +22,26 @@ export class Register extends Component {
     e.preventDefault();
     const { username, email, password, password2 } = this.state;
     if (password !== password2) {
-      this.props.createMessage({ passwordDoesNotMatch: 'Passwords do not match' });
+      this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
     } else {
-      const  newUser = {
+      const newUser = {
         username,
         password,
         email
-      }
+      };
+      console.log("hop!");
       this.props.register(newUser);
+      console.log("hop2");
     }
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, email, password, password2 } = this.state;
-
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
@@ -95,7 +98,7 @@ export class Register extends Component {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 

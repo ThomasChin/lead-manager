@@ -13,7 +13,7 @@ class RegisterAPI(generics.GenericAPIView):
 
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1] # creates token specific to User
+            "token": AuthToken.objects.create(user)[1]# creates token specific to User
         })
 
 class LoginAPI(generics.GenericAPIView):
